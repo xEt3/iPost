@@ -7,16 +7,27 @@ import { Post } from '../../interfaces/interfaces';
   styleUrls: ['./post.component.scss'],
 })
 export class PostComponent implements OnInit {
-  
+
   @Input() post: Post = {};
- 
-  slideSoloOpt={
-    allowSlideNext:false,
-    allowSlidePrev:false
+
+  mostrarFotos=true;
+  mostrarMapas=false;
+
+  slideSoloOpt = {
+    allowSlideNext: false,
+    allowSlidePrev: false
   }
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if(this.post.coords && this.post.imgs.length===0 ){
+      this.mostrarMapas=true
+    }
+   }
 
+  segmentChanged(event) {
+      this.mostrarFotos=!this.mostrarFotos;
+      this.mostrarMapas=!this.mostrarMapas;
+  }
 }
