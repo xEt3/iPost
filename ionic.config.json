@@ -1,0 +1,8 @@
+{
+  "name": "fotosgram",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

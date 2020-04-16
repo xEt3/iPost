@@ -1,0 +1,45 @@
+<div class="post">
+
+  <ion-item lines="none">
+
+    <ion-avatar slot="start">
+      <img src="/assets/avatars/{{post.usuario.avatar}}" />
+    </ion-avatar>
+
+    <ion-label>
+      <h3>{{post.usuario.nombre}}</h3>
+      <h5>{{post.usuario.email}}</h5>
+    </ion-label>
+  </ion-item>
+
+  <!-- ng if imagenes -->
+  <ion-slides mode="ios" pager="ios" scrollbar="ios" *ngIf="post.imgs.length>1">
+
+
+    <ion-slide *ngFor="let img of post.imgs" class="image-slide" [style]="img |imagen:post.usuario._id | domSanitizer">
+    </ion-slide>
+
+  </ion-slides>
+
+  <ion-slides mode="ios" pager="ios" scrollbar="ios" [options]="slideSoloOpt" *ngIf="post.imgs.length===1">
+    <ion-slide class="image-slide" [style]="post.imgs[0] |imagen:post.usuario._id | domSanitizer">
+    </ion-slide>
+
+  </ion-slides>
+
+  <!-- mapa ngif coordenadas -->
+  <app-mapa *ngIf="post.coords" [coords]="post.coords"></app-mapa>
+
+
+  <ion-item lines="none">
+    <ion-icon slot="end" name="heart-outline"></ion-icon>
+    <ion-icon slot="start" name="bookmark-outline"></ion-icon>
+  </ion-item>
+
+  <ion-item lines="none">
+    <ion-label text-wrap>
+      {{post.mensaje}}
+    </ion-label>
+  </ion-item>
+
+</div>
