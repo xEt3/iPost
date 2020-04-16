@@ -50,8 +50,13 @@
 
 
   <ion-item lines="none">
-    <ion-icon slot="end" name="heart-outline"></ion-icon>
-    <ion-icon slot="start" name="bookmark-outline"></ion-icon>
+    <ion-label slot="start">{{post.likes.length}} likes</ion-label>
+    <ion-icon slot="end" name="bookmark-outline" (click)="like()"></ion-icon>
+    <ion-button (click)="like()" fill="clear" shape="round" slot="end">
+      <ion-icon slot="icon-only" name="heart-outline" color="danger" *ngIf="!isliked"></ion-icon>
+      <ion-icon slot="icon-only" name="heart" color="danger" *ngIf="isliked"></ion-icon>
+    </ion-button>
+    
   </ion-item>
 
   <ion-item lines="none">

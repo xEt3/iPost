@@ -10,6 +10,7 @@ export interface Post {
     coords?: string;
     usuario?: Usuario;
     created?: string;
+    likes?:string[];
 }
 
 export interface Usuario {

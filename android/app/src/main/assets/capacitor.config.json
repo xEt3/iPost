@@ -1,6 +1,6 @@
 {
   "appId": "com.ignaciobelmonte",
-  "appName": "fotogram",
+  "appName": "iSocial",
   "linuxAndroidStudioPath": "/home/nacho/Programas/android-studio/bin/studio.sh",
   "bundledWebRuntime": false,
   "npmClient": "npm",

@@ -12,7 +12,6 @@ const url = environment.url
   providedIn: 'root'
 })
 export class UsuarioService {
-  urll=url
   token = null;
   private usuario: Usuario = {};
 
@@ -77,7 +76,7 @@ export class UsuarioService {
 
   getUsuario() {
     if (!this.usuario._id) {
-      this.validaToken();
+       this.validaToken();
     }
     return { ...this.usuario }
   }

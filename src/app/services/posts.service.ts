@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment.prod';
 import { RespuestaPosts, Post } from '../interfaces/interfaces';
 import { UsuarioService } from './usuario.service';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { resolve } from 'url';
 
 const url = environment.url;
 
@@ -44,6 +45,21 @@ export class PostsService {
     }
     this.paginaPosts++;
     return this.http.get<RespuestaPosts>(`${url}/post/?pagina=${this.paginaPosts}`)
+  }
+
+  likePost(idPost:string){
+    return new Promise(resolve=>{
+      const headers = new HttpHeaders({
+        'x-token': this.usuarioService.token
+      })
+      this.http.post(`${url}/post/like/${idPost}`,null,{headers}).subscribe((data:any)=>{
+        if(data['ok']){
+          return resolve(data.postDB);
+        }else{
+          return resolve(false)
+        }
+      })
+    })
   }
 
   subirImagen(pathImg: string) {
