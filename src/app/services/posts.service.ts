@@ -14,6 +14,7 @@ const url = `${environment.url}/post`;
 export class PostsService {
 
   paginaPosts = 0;
+  pageUserPosts = 0;
 
   constructor(private http: HttpClient,
     private usuarioService: UsuarioService,
@@ -46,6 +47,15 @@ export class PostsService {
     }
     this.paginaPosts++;
     return this.http.get<RespuestaPosts>(`${url}/?pagina=${this.paginaPosts}`);
+  }
+
+  // Get posts on pages from 10 post
+  getPostsUser(idUser: string, reset: boolean = false) {
+    if (reset) {
+      this.pageUserPosts = 0;
+    }
+    this.pageUserPosts++;
+    return this.http.get<RespuestaPosts>(`${url}postUser/${idUser}?pagina=${this.pageUserPosts}`);
   }
 
   //Get post by id
