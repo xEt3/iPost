@@ -23,6 +23,13 @@ export class Tab2Page {
     posicion: false
   }
 
+  async deleteTempImage(imageName){
+    let isDeleted=await  this.postService.deleteTempFile(imageName);
+    if(isDeleted){
+      this.tempImages=this.tempImages.filter(tmpimg=>tmpimg.nombreImgServer!=imageName);
+    }
+  }
+
   constructor(private postService: PostsService,
     private navController:NavController,
     private geoLocation:Geolocation,

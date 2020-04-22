@@ -52,7 +52,7 @@
     <ion-col size="6" *ngFor="let image of tempImages">
       <ion-card>
         <img [src]="image.img">
-        <ion-button (click)="onClick()" expand="block" size="large" fill="clear" shape="round">
+        <ion-button (click)="deleteTempImage(image.nombreImgServer)" expand="block" size="large" fill="clear" shape="round">
           <ion-icon slot="icon-only" name="trash"></ion-icon>
         </ion-button>
       </ion-card>
