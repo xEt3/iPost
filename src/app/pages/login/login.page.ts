@@ -46,7 +46,7 @@ export class LoginPage implements OnInit {
   }
 
   async registro(fRegistro:NgForm){
-    const valido = await this.usuarioService.registro(this.registerUser)
+    const valido = await this.usuarioService.register(this.registerUser)
     if(valido){
       this.navController.navigateRoot('main/tabs/tab1',{animated:true});
     }else{

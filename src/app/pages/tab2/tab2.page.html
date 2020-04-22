@@ -5,9 +5,7 @@
     </ion-title>
 
     <ion-buttons slot="end">
-      <ion-button (click)="crearPost()"
-                [disabled]= "post.mensaje.length<1 || cargandoGeo"
-                  color="primary">
+      <ion-button (click)="crearPost()" [disabled]="post.mensaje.length<1 || cargandoGeo" color="primary">
         Compartir
       </ion-button>
     </ion-buttons>
@@ -18,7 +16,7 @@
 <ion-content padding>
 
   <ion-list>
-    
+
     <ion-item>
       <ion-label position="floating">Mensaje</ion-label>
       <ion-textarea [(ngModel)]="post.mensaje"></ion-textarea>
@@ -37,15 +35,13 @@
 
   <ion-row>
     <ion-col size="6">
-      <ion-button expand="full"
-                  shape="round" (click)="camara()">
+      <ion-button expand="full" shape="round" (click)="camara()">
         <ion-icon slot="start" name="camera"></ion-icon>
         Cámara
       </ion-button>
     </ion-col>
     <ion-col size="6">
-      <ion-button expand="full"
-                  shape="round" (click)="galeria()">
+      <ion-button expand="full" shape="round" (click)="galeria()">
         <ion-icon slot="start" name="images"></ion-icon>
         Galería
       </ion-button>
@@ -53,9 +49,12 @@
   </ion-row>
 
   <ion-row>
-    <ion-col size="3" *ngFor="let image of tempImages">
+    <ion-col size="6" *ngFor="let image of tempImages">
       <ion-card>
-        <img [src]="image">
+        <img [src]="image.img">
+        <ion-button (click)="onClick()" expand="block" size="large" fill="clear" shape="round">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-button>
       </ion-card>
     </ion-col>
   </ion-row>

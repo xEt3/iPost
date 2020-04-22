@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Post } from '../../interfaces/interfaces';
+import { Post, imagenTemporal } from '../../interfaces/interfaces';
 import { PostsService } from '../../services/posts.service';
 import { NavController } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -15,9 +15,9 @@ declare var window:any;
 export class Tab2Page {
 
   cargandoGeo=false;
-  tempImages: string[] = []
+  tempImages: imagenTemporal[] = []
 
-  post = {
+  post:Post= {
     mensaje: '',
     coords: null,
     posicion: false
@@ -30,7 +30,7 @@ export class Tab2Page {
   
 
   async crearPost() {
-    const creado = await this.postService.crearPost(this.post);
+    const creado = await this.postService.newPost(this.post);
     if (creado) {
       this.limpiarCampos();
       this.navController.navigateRoot('/main/tabs/tab1')
@@ -92,8 +92,12 @@ export class Tab2Page {
       // If it's base64 (DATA_URL):
  
       const img = window.Ionic.WebView.convertFileSrc(imageData);
-      this.postService.subirImagen(imageData);
-      this.tempImages.push(img);
+      this.postService.uploadImage(imageData).then((data:any)=>{
+       
+        if(data.nombreImagen){
+          this.tempImages.push({img,nombreImgServer:data.nombreImagen})
+        }
+      });
  
      //  let base64Image = 'data:image/jpeg;base64,' + imageData;
  

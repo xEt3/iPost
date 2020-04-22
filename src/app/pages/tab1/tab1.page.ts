@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostsService } from '../../services/posts.service';
-import { Post } from '../../interfaces/interfaces';
+import { Post, Usuario } from '../../interfaces/interfaces';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-tab1',
@@ -12,7 +13,8 @@ export class Tab1Page implements OnInit {
   posts: Post[] = []
   infineScrollHabilitado=true;
 
-  constructor(private postsService: PostsService) { }
+  constructor(private postsService: PostsService,
+    private usuarioService:UsuarioService) { }
 
   ngOnInit() {
     this.siguientes();

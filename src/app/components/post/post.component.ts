@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Post } from '../../interfaces/interfaces';
+import { Post, Usuario } from '../../interfaces/interfaces';
 import { PostsService } from '../../services/posts.service';
 import { UsuarioService } from '../../services/usuario.service';
 
@@ -24,14 +24,14 @@ export class PostComponent implements OnInit {
   constructor(private postService:PostsService,
     private usuarioService:UsuarioService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     if(this.post.coords && this.post.imgs.length===0 ){
       this.mostrarMapas=true
     }
-    
+    const currentUser:Usuario = await this.usuarioService.getCurrentUser();
+    console.log(this.post)
     this.post.likes.forEach((like:any)=>{
-      console.log(like)
-      if(like._id==this.usuarioService.getUsuario()._id){
+      if(like._id==currentUser._id){
         this.isliked=true;
       }
     })
@@ -45,6 +45,7 @@ export class PostComponent implements OnInit {
   async like(){
     console.log('like')
     this.postService.likePost(this.post._id).then((post)=>{
+      console.log(post)
       if(post){
         this.post=post
         this.isliked=!this.isliked

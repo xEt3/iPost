@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment.prod';
-import { RespuestaPosts, Post, RespuestaSubidaImagen } from '../interfaces/interfaces';
+import { Post, RespuestaSubidaImagen, PostsResponse } from '../interfaces/interfaces';
 import { UsuarioService } from './usuario.service';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { resolve } from 'url';
@@ -15,6 +15,7 @@ export class PostsService {
 
   paginaPosts = 0;
   pageUserPosts = 0;
+  pageFollowingPosts = 0;
 
   constructor(private http: HttpClient,
     private usuarioService: UsuarioService,
@@ -40,14 +41,25 @@ export class PostsService {
     });
   }
 
-  // Get posts on pages from 10 post
+  // Get posts global on pages from 10 post
   getPosts(reset: boolean = false) {
+    if (reset) {
+      this.pageFollowingPosts = 0;
+    }
+    this.pageFollowingPosts++;
+    return this.http.get<PostsResponse>(`${url}/?pagina=${this.pageFollowingPosts}`);
+  }
+
+  //Get post users following
+  getPostsFollowing(reset: boolean = false) {
     if (reset) {
       this.paginaPosts = 0;
     }
     this.paginaPosts++;
-    return this.http.get<RespuestaPosts>(`${url}/?pagina=${this.paginaPosts}`);
+    return this.http.get<PostsResponse>(`${url}/postFollowing/?pagina=${this.paginaPosts}`);
   }
+
+
 
   // Get posts on pages from 10 post
   getPostsUser(idUser: string, reset: boolean = false) {
@@ -55,12 +67,12 @@ export class PostsService {
       this.pageUserPosts = 0;
     }
     this.pageUserPosts++;
-    return this.http.get<RespuestaPosts>(`${url}postUser/${idUser}?pagina=${this.pageUserPosts}`);
+    return this.http.get<PostsResponse>(`${url}postUser/${idUser}?pagina=${this.pageUserPosts}`);
   }
 
   //Get post by id
   getPostByid(idPost: string) {
-    return this.http.get<RespuestaPosts>(`${url}/get/${idPost}`);
+    return this.http.get<PostsResponse>(`${url}/get/${idPost}`);
   }
 
   //Delete post
@@ -69,8 +81,8 @@ export class PostsService {
       const headers = new HttpHeaders({
         'x-token': this.usuarioService.token
       })
-      this.http.delete<RespuestaPosts>(`${url}/remove/${idPost}`, { headers }).subscribe(data => {
-        if (data['ok']{
+      this.http.delete<PostsResponse>(`${url}/remove/${idPost}`, { headers }).subscribe(data => {
+        if (data['ok']){
           console.log(data)
           return resolve(true)
         } else {
@@ -118,9 +130,9 @@ export class PostsService {
       const headers = new HttpHeaders({
         'x-token': this.usuarioService.token
       })
-      this.http.post(`${url}/post/like/${idPost}`, null, { headers }).subscribe((data: any) => {
+      this.http.post(`${url}/like/${idPost}`, null, { headers }).subscribe((data: any) => {
         if (data['ok']) {
-          return resolve(data.postDB);
+          return resolve(data.post);
         } else {
           return resolve(false)
         }

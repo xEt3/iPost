@@ -93,7 +93,7 @@ export class UsuarioService {
   }
 
   async getCurrentUser() {
-    if (!this.usuario._id) {
+    if (!this.usuario) {
       await this.validaToken();
     }
     return { ...this.usuario }
@@ -137,7 +137,7 @@ export class UsuarioService {
     this.token = await this.storage.get('token') || null;
   }
 
-  private async validaToken(): Promise<boolean> {
+  async validaToken(): Promise<boolean> {
     await this.cargarToken();
     if (!this.token) {
       this.navController.navigateRoot('/login');

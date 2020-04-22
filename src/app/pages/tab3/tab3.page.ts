@@ -17,13 +17,13 @@ export class Tab3Page implements OnInit {
   constructor(private usuarioService:UsuarioService,
     private uiService:UIService,private postService:PostsService) {}
 
-  ngOnInit(){
-    this.usuario=this.usuarioService.getUsuario();
+  async ngOnInit(){
+    this.usuario=await this.usuarioService.getCurrentUser();
   }
 
   async actualizar(fActualizar:NgForm){
     if(fActualizar.valid){
-      const actualizado = await this.usuarioService.actualizarUsuario(this.usuario)
+      const actualizado = await this.usuarioService.updateUser(this.usuario)
       if(actualizado){
         this.uiService.presentToast("Actualizado")
       }else{
